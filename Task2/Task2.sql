@@ -1,0 +1,29 @@
+CREATE DATABASE IF NOT EXISTS BOOKS_AUTHORS;
+USE BOOKS_AUTHORS;
+
+CREATE TABLE IF NOT EXISTS Authors
+(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    author VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Books
+(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    book VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS BooksAuthors
+(
+    bookId INT NOT NULL,
+    authorId INT NOT NULL,
+    UNIQUE (bookId,authorId),
+    FOREIGN KEY (authorId) REFERENCES Authors(id) ON DELETE CASCADE,
+	FOREIGN KEY (bookId) REFERENCES Books(id) ON DELETE CASCADE
+);
+
+-- zapros
+SELECT Authors.author FROM 
+Authors JOIN BooksAuthors ON Authors.id = BooksAuthors.authorId 
+GROUP BY author 
+HAVING COUNT(author)<7
